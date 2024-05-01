@@ -4,6 +4,7 @@ import 'package:levels_athletes_coaches/Screens/booktime_screen.dart';
 import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/helper/utils.dart';
 import 'package:levels_athletes_coaches/widgets/richText.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class CoachProfileScreen extends StatefulWidget {
   const CoachProfileScreen({super.key});
@@ -20,9 +21,9 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
   bool isExpandedContent = false;
   bool isExpandedTrainingProgram = false;
   List<String> images = [
-    backgroundImage,
-    backgroundImage,
-    backgroundImage
+    AppImages.backgroundImage,
+    AppImages.backgroundImage,
+    AppImages.backgroundImage
   ];
 
   String profileImage = (Constants.isAthlete)
@@ -36,7 +37,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

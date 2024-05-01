@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:levels_athletes_coaches/coach_provider.dart';
 import 'package:levels_athletes_coaches/splash_screen.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Levels',
       theme: ThemeData(

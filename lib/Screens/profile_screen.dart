@@ -6,6 +6,7 @@ import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/helper/utils.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/richText.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,9 +19,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   List<String> images = [
-    backgroundImage,
-    backgroundImage,
-    backgroundImage
+    AppImages.backgroundImage,
+    AppImages.backgroundImage,
+    AppImages.backgroundImage
   ];
 
   Future<void> clearUserData() async {
@@ -38,8 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.fill),
+            image: AssetImage(AppImages.backgroundImage), fit: BoxFit.fill),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -84,17 +84,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.transparent,
                               child: profileImage.isNotEmpty
                                   ? Image.network(
-                                insertAuthPath(profileImage),
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
-                              )
+                                      insertAuthPath(profileImage),
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                    )
                                   : Image.asset(
-                                'assets/images/demo.png',
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
-                              ),
+                                      'assets/images/demo.png',
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                    ),
                             ),
                           ),
                         ),
@@ -114,8 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               "${Constants.isAthlete ? Constants.athleteModel!.name : Constants.coachModel?.name}",
@@ -124,13 +123,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),
                             ),
-                            const SizedBox(height: 10,),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             richText('Date Joined: ',
                                 "${Constants.isAthlete ? DateFormat('yyyy-MM-dd').format(Constants.athleteModel!.dateJoined) : (Constants.coachModel?.dateJoined != null ? DateFormat('yyyy-MM-dd').format(Constants.coachModel!.dateJoined!) : '')}"),
                             // richText(
                             //     'Training Jui-Jitsu since: ', '2023'),
                             // richText('Attainment: ', 'Black Belt'),
-                            richText('Gym(s): ', "${Constants.isAthlete ? Constants.athleteModel!.location : Constants.coachModel?.location}"),
+                            richText('Gym(s): ',
+                                "${Constants.isAthlete ? Constants.athleteModel!.location : Constants.coachModel?.location}"),
                           ],
                         ),
                       ),

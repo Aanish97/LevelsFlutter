@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:levels_athletes_coaches/Screens/login_screen.dart';
-import 'package:levels_athletes_coaches/Screens/signup_screen.dart';
-import 'package:levels_athletes_coaches/constants.dart';
+import 'package:get/get.dart';
+import 'package:levels_athletes_coaches/Screens/authScreen/login_screen.dart';
+import 'package:levels_athletes_coaches/Screens/authScreen/signup_screen.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
+import 'package:levels_athletes_coaches/constants/app_sizes.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -14,66 +17,96 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        image:
-            DecorationImage(image: AssetImage(background1), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.5),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 250,
-                height: 250,
+    return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.5),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        // width: MediaQuery.of(context).size.width,
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            /// back ground image
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Image.asset(
+                AppImages.background1,
+                width: height(context) * 0.280,
+                height: height(context) * 0.280,
                 fit: BoxFit.cover,
               ),
-              const SizedBox(
-                height: 40,
+            ),
+
+            // /// front shadow
+            // Positioned(
+            //     left: 0,
+            //     right: 0,
+            //     top: 0,
+            //     bottom: 0,
+            //     child: Container(
+            //       color: const Color(0xff000000).withOpacity(0.6),
+            //     )),
+
+            Positioned(
+              top: height(context) * 0.157,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Image.asset(
+                    AppImages.appLogo,
+                    width: 289,
+                    height: 259,
+                    fit: BoxFit.cover,
+                  ),
+                  SizedBox(
+                    height: height(context) * 0.05,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 37.0),
+                    child: CustomButton(
+                      textColor: Colors.white,
+                      title: 'SIGN UP',
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const SignUpScreen()));
+                        Get.to(() => const SignUpScreen());
+                      },
+                      isTransparent: false,
+                      height: 55,
+                      fontSize: kFont14,
+                    ),
+                  ),
+                  SizedBox(
+                    height: height(context) * 0.025,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 37.0),
+                    child: CustomButton(
+                      textColor: Colors.white,
+                      title: 'LOGIN',
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const LoginScreen()));
+                        Get.to(() => const LoginScreen());
+                      },
+                      fontSize: kFont14,
+                      buttonColor: Colors.black26,
+                      isTransparent: false,
+                      height: 55,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: CustomButton(
-                  textColor: Colors.white,
-                  title: 'SIGN UP',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpScreen()));
-                  },
-                  isTransparent: false,
-                  height: 55,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: CustomButton(
-                  textColor: Colors.white,
-                  title: 'LOGIN',
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
-                  },
-                  isTransparent: true,
-                  height: 55,
-                ),
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

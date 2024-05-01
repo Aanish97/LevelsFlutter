@@ -4,6 +4,7 @@ import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/helper/utils.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/input_field.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -32,8 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.fill),
+            image: AssetImage(AppImages.backgroundImage), fit: BoxFit.fill),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -60,17 +60,17 @@ class _SearchScreenState extends State<SearchScreen> {
                               color: Colors.transparent,
                               child: profileImage.isNotEmpty
                                   ? Image.network(
-                                insertAuthPath(profileImage),
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
-                              )
+                                      insertAuthPath(profileImage),
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                    )
                                   : Image.asset(
-                                'assets/images/demo.png',
-                                fit: BoxFit.cover,
-                                width: 50,
-                                height: 50,
-                              ),
+                                      'assets/images/demo.png',
+                                      fit: BoxFit.cover,
+                                      width: 50,
+                                      height: 50,
+                                    ),
                             ),
                           ),
                         ),

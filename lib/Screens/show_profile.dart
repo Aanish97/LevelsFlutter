@@ -5,6 +5,7 @@ import 'package:levels_athletes_coaches/helper/utils.dart';
 import 'package:levels_athletes_coaches/models/coach_model.dart';
 import 'package:levels_athletes_coaches/models/user_model.dart';
 import 'package:levels_athletes_coaches/widgets/richText.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class ShowProfileScreen extends StatefulWidget {
   final CoachModel? coachModel;
@@ -20,9 +21,9 @@ class ShowProfileScreen extends StatefulWidget {
 
 class _ShowProfileScreenState extends State<ShowProfileScreen> {
   List<String> images = [
-    backgroundImage,
-    backgroundImage,
-    backgroundImage
+    AppImages.backgroundImage,
+    AppImages.backgroundImage,
+    AppImages.backgroundImage
   ];
 
   String profileImage = (Constants.isAthlete)
@@ -35,7 +36,7 @@ class _ShowProfileScreenState extends State<ShowProfileScreen> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

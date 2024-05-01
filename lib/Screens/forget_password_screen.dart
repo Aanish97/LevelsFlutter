@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/validator.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/input_field.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -21,8 +21,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(loginBg),
-            fit: BoxFit.fill),
+            image: AssetImage(AppImages.loginBg), fit: BoxFit.fill),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),

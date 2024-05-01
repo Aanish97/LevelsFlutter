@@ -1,12 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:levels_athletes_coaches/BottomBar/buttombar.dart';
 import 'package:levels_athletes_coaches/Screens/forget_password_screen.dart';
 import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/constants.dart';
+import 'package:levels_athletes_coaches/constants/app_sizes.dart';
+import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
 import 'package:levels_athletes_coaches/validator.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
+import 'package:levels_athletes_coaches/widgets/custom_text_field.dart';
 import 'package:levels_athletes_coaches/widgets/input_field.dart';
+
+import '../../constants/app_colors.dart';
+import '../../constants/app_images.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -63,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
           Constants.isAthlete = true;
           Constants.athleteModel = await authService.fetchAthleteDetails(
               tokens['access'], tokens['user_id']);
-
         } else {
           Constants.isAthlete = false;
           Constants.coachModel = await authService.fetchCoachDetails(
@@ -99,60 +106,80 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage(loginBg), fit: BoxFit.fill),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.5),
-        body: Column(
-          children: [
-            SafeArea(
-              child: Image.asset(
-                'assets/images/logo.png',
-                height: 200,
-                width: 200,
-              ),
-            ),
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                  ),
+    return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.5),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: height(context),
+          child: Stack(
+            children: [
+              /// bg image
+              Positioned.fill(
+                top:0,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  AppImages.loginBg,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
                 ),
-                child: SingleChildScrollView(
+              ),
+              /// logo is here
+              Positioned(
+                top: height(context)*0.08,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  AppImages.appLogo,
+                  height: 210,
+                  width: 210,
+                ),
+              ),
+              /// data shown here
+              Positioned(
+                top: height(context)*0.43,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25.0),
+                      topRight: Radius.circular(25.0),
+                    ),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    padding: const  EdgeInsets.only(left: 25.0, right: 25.0),
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 30,
+                         SizedBox(
+                          height: height(context)*0.03,
                         ),
-                        const Center(
+                        Center(
                             child: Text(
                           'Login',
-                          style: TextStyle(
-                              fontSize: 28, fontWeight: FontWeight.bold),
+                          style: montserratBold.copyWith(
+                            color: AppColors.blackColor,
+                            fontSize: kFont28,
+                          ),
                         )),
-                        const SizedBox(
-                          height: 25,
+                         SizedBox(
+                          height: height(context)*0.05,
                         ),
                         Form(
                           key: _formKey,
                           child: Column(
                             children: [
-                              InputField(
+                              CustomTextField(
                                   hintText: 'Email',
-                                  obscureText: false,
+                                  isObscure: false,
                                   keyboardType: TextInputType.emailAddress,
                                   suffixIcon: const SizedBox(),
                                   controller: emailController,
-                                  textFieldValidator: (value) {
+                                  validator: (value) {
                                     if (!Validators().validateEmail(
                                         emailController.text.trim())) {
                                       return 'Please enter a valid email';
@@ -160,12 +187,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                       return null;
                                     }
                                   }),
-                              const SizedBox(
-                                height: 10,
+                               SizedBox(
+                                height: height(context)*0.03,
                               ),
-                              InputField(
+                              CustomTextField(
                                   hintText: 'Password',
-                                  obscureText: passwordVisible,
+                                  isObscure: passwordVisible,
                                   keyboardType: TextInputType.text,
                                   suffixIcon: IconButton(
                                     color: Colors.black,
@@ -176,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     onPressed: togglePassword,
                                   ),
                                   controller: passwordController,
-                                  textFieldValidator: (value) {
+                                  validator: (value) {
                                     if (!Validators().validatePassword(
                                         passwordController.text.trim())) {
                                       return 'Please enter a valid password';
@@ -234,8 +261,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

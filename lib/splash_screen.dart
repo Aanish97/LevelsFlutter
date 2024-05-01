@@ -5,6 +5,7 @@ import 'package:levels_athletes_coaches/Screens/welcome_screen.dart';
 import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/constants.dart';
 import 'package:lottie/lottie.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -65,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image:
-            DecorationImage(image: AssetImage(background1), fit: BoxFit.cover),
+            DecorationImage(image: AssetImage(AppImages.background1), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -77,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/logo.png',
+                  AppImages.appLogo,
                   width: 250,
                   height: 250,
                   fit: BoxFit.cover,

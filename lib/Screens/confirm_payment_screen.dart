@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:levels_athletes_coaches/Screens/bookingsuccess_screen.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class ConfirmPayment extends StatefulWidget {
   const ConfirmPayment({super.key});
@@ -18,7 +18,7 @@ class _ConfirmPaymentState extends State<ConfirmPayment> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

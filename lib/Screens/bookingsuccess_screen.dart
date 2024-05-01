@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class BookingSuccess extends StatefulWidget {
   const BookingSuccess({super.key});
@@ -17,7 +17,7 @@ class _BookingSuccessState extends State<BookingSuccess> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

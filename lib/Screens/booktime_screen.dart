@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:levels_athletes_coaches/Screens/confirm_payment_screen.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
-
-import '../constants.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class BookATime extends StatefulWidget {
   const BookATime({super.key});
@@ -19,7 +18,7 @@ class _BookATimeState extends State<BookATime> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constants/app_colors.dart';
+
 class InputField extends StatelessWidget {
   final String? hintText;
   final bool obscureText;
@@ -26,16 +28,17 @@ class InputField extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
         filled: true,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(13)),
         ),
         hintText: hintText ?? "name",
         errorStyle: const TextStyle(
           color: Colors.red,
         ),
+        fillColor: AppColors.textFieldFillColor,
         hintStyle: const TextStyle(
           color: Colors.grey,
         ),

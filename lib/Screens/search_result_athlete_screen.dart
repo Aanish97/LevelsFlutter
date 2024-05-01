@@ -6,6 +6,7 @@ import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/models/user_model.dart';
 import 'package:levels_athletes_coaches/widgets/search_result_card.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class SearchResultAthleteScreen extends StatefulWidget {
   const SearchResultAthleteScreen({super.key});
@@ -46,7 +47,7 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
+            image: AssetImage(AppImages.backgroundImage),
             fit: BoxFit.fill),
       ),
       child: Scaffold(

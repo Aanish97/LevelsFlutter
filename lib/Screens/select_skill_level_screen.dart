@@ -2,9 +2,9 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:levels_athletes_coaches/Screens/questions_screen.dart';
 import 'package:levels_athletes_coaches/Screens/select_sport_screen.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/expended_tile.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class SelectSkillLevel extends StatefulWidget {
   final List<SportsData> sportData;
@@ -42,7 +42,7 @@ class _SelectSkillLevelState extends State<SelectSkillLevel> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image:
-            DecorationImage(image: AssetImage(background2), fit: BoxFit.cover),
+            DecorationImage(image: AssetImage(AppImages.background2), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),

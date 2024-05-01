@@ -11,6 +11,7 @@ import 'package:levels_athletes_coaches/validator.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/input_field.dart';
 import 'package:levels_athletes_coaches/widgets/profile_pic.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({
@@ -43,10 +44,15 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController birthdayController = TextEditingController(
       text: Constants.isAthlete
           ? Constants.athleteModel!.birthdate
-          : Constants.coachModel!.birthdate != null ? DateFormat('yyyy-MM-dd').format(Constants.coachModel!.birthdate!): '');
+          : Constants.coachModel!.birthdate != null
+              ? DateFormat('yyyy-MM-dd')
+                  .format(Constants.coachModel!.birthdate!)
+              : '');
 
   final TextEditingController locationController = TextEditingController(
-      text: Constants.isAthlete ? Constants.athleteModel!.location : Constants.coachModel!.location);
+      text: Constants.isAthlete
+          ? Constants.athleteModel!.location
+          : Constants.coachModel!.location);
 
   final TextEditingController hourlyRateController = TextEditingController(
       text: Constants.isAthlete
@@ -94,9 +100,8 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> _pickImage() async {
     try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image
-      );
+      FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
 
       if (result != null) {
         File file = File(result.files.single.path!);
@@ -104,7 +109,7 @@ class _EditProfileState extends State<EditProfile> {
         imageFile = file.path;
         setState(() {});
       }
-    }catch(error){
+    } catch (error) {
       debugPrint(error.toString());
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -122,8 +127,7 @@ class _EditProfileState extends State<EditProfile> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.fill),
+            image: AssetImage(AppImages.backgroundImage), fit: BoxFit.fill),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -343,7 +347,9 @@ class _EditProfileState extends State<EditProfile> {
                                           } else {
                                             return null;
                                           }
-                                        }, suffixIcon: const SizedBox(),),
+                                        },
+                                        suffixIcon: const SizedBox(),
+                                      ),
                                       const SizedBox(
                                         height: 10,
                                       ),
@@ -358,11 +364,12 @@ class _EditProfileState extends State<EditProfile> {
                                           } else {
                                             return null;
                                           }
-                                        }, suffixIcon: const SizedBox(),),
+                                        },
+                                        suffixIcon: const SizedBox(),
+                                      ),
                                     ],
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
@@ -380,18 +387,17 @@ class _EditProfileState extends State<EditProfile> {
                                 if (Constants.isAthlete) {
                                   AthleteModel updateData = AthleteModel(
                                     id: Constants.athleteModel!.id,
-                                    name:
-                                        nameController.text.trim().isNotEmpty
-                                            ? nameController.text.trim()
-                                            : Constants.athleteModel!.name,
+                                    name: nameController.text.trim().isNotEmpty
+                                        ? nameController.text.trim()
+                                        : Constants.athleteModel!.name,
                                     email:
                                         emailController.text.trim().isNotEmpty
                                             ? emailController.text.trim()
                                             : Constants.athleteModel!.email,
                                     username:
-                                    emailController.text.trim().isNotEmpty
-                                        ? emailController.text.trim()
-                                        : Constants.athleteModel!.email,
+                                        emailController.text.trim().isNotEmpty
+                                            ? emailController.text.trim()
+                                            : Constants.athleteModel!.email,
                                     phoneNumber: phoneController.text.trim(),
                                     location: locationController.text.trim(),
 
@@ -413,7 +419,9 @@ class _EditProfileState extends State<EditProfile> {
                                   );
                                   AuthService authRepo = AuthService();
                                   await authRepo.updateAthleteDetails(
-                                      updateData, imageFile, Constants.accessToken);
+                                      updateData,
+                                      imageFile,
+                                      Constants.accessToken);
                                   Constants.athleteModel =
                                       await authRepo.fetchAthleteDetails(
                                           Constants.accessToken,
@@ -432,18 +440,17 @@ class _EditProfileState extends State<EditProfile> {
                                 } else {
                                   CoachModel updateData = CoachModel(
                                     id: Constants.coachModel!.id,
-                                    name:
-                                        nameController.text.trim().isNotEmpty
-                                            ? nameController.text.trim()
-                                            : Constants.coachModel!.name,
+                                    name: nameController.text.trim().isNotEmpty
+                                        ? nameController.text.trim()
+                                        : Constants.coachModel!.name,
                                     email:
                                         emailController.text.trim().isNotEmpty
                                             ? emailController.text.trim()
                                             : Constants.coachModel!.email,
                                     username:
-                                    emailController.text.trim().isNotEmpty
-                                        ? emailController.text.trim()
-                                        : Constants.coachModel!.email,
+                                        emailController.text.trim().isNotEmpty
+                                            ? emailController.text.trim()
+                                            : Constants.coachModel!.email,
                                     phoneNumber:
                                         phoneController.text.trim().isNotEmpty
                                             ? phoneController.text.trim()
@@ -451,8 +458,10 @@ class _EditProfileState extends State<EditProfile> {
                                     location: locationController.text.trim(),
                                     hourlyRate:
                                         int.parse(hourlyRateController.text),
-                                    yearsOfCoaching: int.parse(yearsOfCoachingController.text.trim()),
-                                    yearsOfTraining: int.parse(yearsOfTrainingController.text.trim()),
+                                    yearsOfCoaching: int.parse(
+                                        yearsOfCoachingController.text.trim()),
+                                    yearsOfTraining: int.parse(
+                                        yearsOfTrainingController.text.trim()),
                                     // birthdate: DateTime.timestamp(),
                                   );
                                   AuthService authRepo = AuthService();

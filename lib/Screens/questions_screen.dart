@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:levels_athletes_coaches/Screens/login_screen.dart';
+import 'package:levels_athletes_coaches/Screens/authScreen/login_screen.dart';
 import 'package:levels_athletes_coaches/Screens/select_sport_screen.dart';
 import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/coach_provider.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/models/coach_model.dart';
-import 'package:levels_athletes_coaches/validator.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/input_field.dart';
 import 'package:provider/provider.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class QuestionsScreen extends StatefulWidget {
   final List<SportsData> sportData;
@@ -61,8 +60,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
-        image:
-            DecorationImage(image: AssetImage(background4), fit: BoxFit.cover),
+        image: DecorationImage(
+            image: AssetImage(AppImages.background4), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),

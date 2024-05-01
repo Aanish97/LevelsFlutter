@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:levels_athletes_coaches/Screens/select_skill_level_screen.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/models/coach_model.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/select_sport_button.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class SelectSport extends StatefulWidget {
   const SelectSport({super.key});
@@ -41,8 +41,8 @@ class _SelectSportState extends State<SelectSport> {
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
-        image:
-            DecorationImage(image: AssetImage(background2), fit: BoxFit.cover),
+        image: DecorationImage(
+            image: AssetImage(AppImages.background2), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
@@ -54,19 +54,25 @@ class _SelectSportState extends State<SelectSport> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: const Icon(Icons.arrow_back_ios_new_rounded, size: 30,color: Colors.white,),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: 30,
+                          color: Colors.white,
+                        ),
                       )),
                   Image.asset(
                     'assets/images/logo.png',
                     height: 200,
                     width: 200,
                   ),
-                  SizedBox(width: 30,)
+                  SizedBox(
+                    width: 30,
+                  )
                 ],
               ),
             ),

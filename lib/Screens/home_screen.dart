@@ -6,6 +6,7 @@ import 'package:levels_athletes_coaches/Screens/search_result_athlete_screen.dar
 import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/helper/utils.dart';
 import 'package:levels_athletes_coaches/widgets/home_screen_card.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,8 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(backgroundImage),
-            fit: BoxFit.fill),
+            image: AssetImage(AppImages.backgroundImage), fit: BoxFit.fill),
       ),
       child: Scaffold(
         backgroundColor: Colors.black.withOpacity(0.5),
