@@ -8,7 +8,7 @@ class SignupController extends GetxController {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController phoneNoController = TextEditingController();
-  String professionType = 'ATHLETE';
+  RxString professionType = 'ATHLETE'.obs;
   RxBool passwordVisible = true.obs;
   RxBool confirmPasswordVisible = true.obs;
   RxBool loading = false.obs;
@@ -16,7 +16,7 @@ class SignupController extends GetxController {
 
   void setProfessionType(String type) {
 
-      professionType = type;
+      professionType.value = type;
       update();
   }
 

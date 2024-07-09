@@ -1,20 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:levels_athletes_coaches/BottomBar/buttombar.dart';
+import 'package:get/get.dart';
 import 'package:levels_athletes_coaches/Screens/forget_password_screen.dart';
-import 'package:levels_athletes_coaches/Services/auth_services.dart';
-import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/constants/app_sizes.dart';
 import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
 import 'package:levels_athletes_coaches/validator.dart';
 import 'package:levels_athletes_coaches/widgets/custom_button.dart';
 import 'package:levels_athletes_coaches/widgets/custom_text_field.dart';
-import 'package:levels_athletes_coaches/widgets/input_field.dart';
+import 'package:levels_athletes_coaches/constants/app_colors.dart';
+import 'package:levels_athletes_coaches/constants/app_images.dart';
 
-import '../../constants/app_colors.dart';
-import '../../constants/app_images.dart';
+import 'package:levels_athletes_coaches/Controllers/auth_controller/logincontroller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,110 +19,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = TextEditingController(text: '');
-  final TextEditingController passwordController =
-      TextEditingController(text: '');
-  bool passwordVisible = true;
-  final secureStorage = const FlutterSecureStorage();
-  AuthService authService = AuthService();
-  bool loading = false;
-
-  void togglePassword() {
-    setState(() {
-      passwordVisible = !passwordVisible;
-    });
-  }
-
-  Future<String?> readKey(String key) async {
-    String? value = await secureStorage.read(key: key);
-    return value;
-  }
-
-  Future<void> authenticateUser() async {
-    setState(() {
-      loading = true;
-    });
-    final username = emailController.text.trim();
-    final password = passwordController.text.trim();
-    try {
-      var tokens = await AuthService.getToken(username, password);
-      if (tokens != null) {
-        // await SharedPref.saveToSharedPref('access_token',tokens['access']);
-        await secureStorage.write(key: 'access_token', value: tokens['access']);
-        await secureStorage.write(
-            key: 'refresh_token', value: tokens['refresh']);
-        await secureStorage.write(key: 'type', value: tokens['type']);
-        await secureStorage.write(
-            key: 'userId', value: (tokens['user_id']).toString());
-
-        //String? myString = await SharedPref.readFromSharedPref('access_token');
-        // print(myString);
-
-        String? accessToken = await readKey('access_token');
-        Constants.accessToken = accessToken!;
-        print(accessToken);
-        if (tokens['type'] == 'athlete') {
-          Constants.isAthlete = true;
-          Constants.athleteModel = await authService.fetchAthleteDetails(
-              tokens['access'], tokens['user_id']);
-        } else {
-          Constants.isAthlete = false;
-          Constants.coachModel = await authService.fetchCoachDetails(
-              tokens['access'], tokens['user_id']);
-        }
-
-        if (Constants.coachModel != null || Constants.athleteModel != null) {
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => const TabContainer()),
-              (Route<dynamic> route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Something went wrong'),
-            ),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login failed. Please check your credentials.'),
-          ),
-        );
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      setState(() {
-        loading = false;
-      });
-    }
-  }
-
+  LoginController controller=Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.5),
-      body: SingleChildScrollView(
+      body: Obx(()=>SingleChildScrollView(
         child: SizedBox(
           height: height(context),
           child: Stack(
             children: [
               /// bg image
               Positioned.fill(
-                top:0,
+                top: 0,
                 left: 0,
                 right: 0,
                 child: Image.asset(
                   AppImages.loginBg,
                   height: 200,
                   width: 200,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
+
+              /// front shadow
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Container(
+                    color: const Color(0xff000000).withOpacity(0.4),
+                  )),
+
               /// logo is here
               Positioned(
-                top: height(context)*0.08,
+                top: height(context) * 0.08,
                 left: 0,
                 right: 0,
                 child: Image.asset(
@@ -136,9 +63,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 210,
                 ),
               ),
+
               /// data shown here
               Positioned(
-                top: height(context)*0.43,
+                top: height(context) * 0.43,
                 left: 0,
                 right: 0,
                 bottom: 0,
@@ -152,11 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child: Padding(
-                    padding: const  EdgeInsets.only(left: 25.0, right: 25.0),
+                    padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                     child: Column(
                       children: [
-                         SizedBox(
-                          height: height(context)*0.03,
+                        SizedBox(
+                          height: height(context) * 0.03,
                         ),
                         Center(
                             child: Text(
@@ -166,11 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: kFont28,
                           ),
                         )),
-                         SizedBox(
-                          height: height(context)*0.05,
+                        SizedBox(
+                          height: height(context) * 0.05,
                         ),
                         Form(
-                          key: _formKey,
+                          key: controller.formKey,
                           child: Column(
                             children: [
                               CustomTextField(
@@ -178,34 +106,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                   isObscure: false,
                                   keyboardType: TextInputType.emailAddress,
                                   suffixIcon: const SizedBox(),
-                                  controller: emailController,
+                                  controller: controller.emailController,
                                   validator: (value) {
                                     if (!Validators().validateEmail(
-                                        emailController.text.trim())) {
+                                        controller.emailController.text.trim())) {
                                       return 'Please enter a valid email';
                                     } else {
                                       return null;
                                     }
                                   }),
-                               SizedBox(
-                                height: height(context)*0.03,
+                              SizedBox(
+                                height: height(context) * 0.03,
                               ),
                               CustomTextField(
                                   hintText: 'Password',
-                                  isObscure: passwordVisible,
+                                  isObscure: controller.passwordVisible.value,
                                   keyboardType: TextInputType.text,
                                   suffixIcon: IconButton(
                                     color: Colors.black,
                                     splashRadius: 1,
-                                    icon: Icon(!passwordVisible
+                                    icon: Icon(!controller.passwordVisible.value
                                         ? Icons.visibility_outlined
                                         : Icons.visibility_off_outlined),
-                                    onPressed: togglePassword,
+                                    onPressed: controller.togglePassword,
                                   ),
-                                  controller: passwordController,
+                                  controller: controller.passwordController,
                                   validator: (value) {
                                     if (!Validators().validatePassword(
-                                        passwordController.text.trim())) {
+                                        controller.passwordController.text.trim())) {
                                       return 'Please enter a valid password';
                                     } else {
                                       return null;
@@ -221,11 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.topRight,
                           child: InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ForgotPasswordPage()));
+                              Get.to(const ForgotPasswordPage());
                             },
                             child: const Text(
                               'Forgot Password?',
@@ -244,13 +168,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           textColor: Colors.white,
                           title: 'LOGIN',
                           onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              authenticateUser();
+                            if (controller.formKey.currentState!.validate()) {
+                              controller.authenticateUser(context);
                             }
                           },
                           isTransparent: false,
                           height: 55,
-                          child: loading
+                          child: controller.loading.value
                               ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
@@ -264,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }

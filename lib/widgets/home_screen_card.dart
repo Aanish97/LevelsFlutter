@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:levels_athletes_coaches/constants/app_sizes.dart';
+import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
+
+import '../constants/app_colors.dart';
 
 class ClickableCard extends StatefulWidget {
-  final Icon icon;
+  final String imagePath;
   final String title;
   final Color color;
   final Color colorLight;
@@ -9,7 +13,7 @@ class ClickableCard extends StatefulWidget {
 
   const ClickableCard({
     Key? key,
-    required this.icon,
+    required this.imagePath,
     required this.title,
     required this.color,
     required this.colorLight,
@@ -21,7 +25,7 @@ class ClickableCard extends StatefulWidget {
 }
 
 class _ClickableCardState extends State<ClickableCard> {
-  Color borderColor = Colors.grey;
+  Color borderColor = const Color(0xFF707070);
 
   void changeBorderColor() {
     setState(() {
@@ -50,22 +54,22 @@ class _ClickableCardState extends State<ClickableCard> {
             color: widget.colorLight,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  color: borderColor,
+                side: const BorderSide(
+                  color: AppColors.borderColor,
                 )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                widget.icon,
+                Image.asset(widget.imagePath),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
                   widget.title,
-                  style: const TextStyle(
-                      fontSize: 14,
+                  style:  montserratBold.copyWith(
+                      fontSize: kFont14,
                       color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                      ),
                 ),
               ],
             ),

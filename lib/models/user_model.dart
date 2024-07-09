@@ -13,6 +13,7 @@ class AthleteModel {
   String birthdate;
   String profileImage;
   String phoneNumber;
+  String gender;
   String bio;
   List<String> groups;
   List<String> userPermissions;
@@ -23,6 +24,7 @@ class AthleteModel {
       {required this.id,
       required this.password,
       this.lastLogin,
+        required this.gender,
       required this.isSuperuser,
       required this.username,
       required this.firstName,
@@ -73,6 +75,7 @@ class AthleteModel {
       'bio': bio,
       'groups': groups,
       'user_permissions': userPermissions,
+      'gender':gender
     };
   }
 
@@ -99,6 +102,7 @@ class AthleteModel {
   }
 
   factory AthleteModel.fromJson(Map<String, dynamic> json) {
+
     return AthleteModel(
         id: json['id'] ?? '',
         password: json['password'] ?? '',
@@ -120,6 +124,7 @@ class AthleteModel {
         bio: json['bio'] ?? '',
         groups: List<String>.from(json['groups'] ?? []),
         userPermissions: List<String>.from(json['user_permissions'] ?? []),
+        gender:json['gender'] ?? '' ,
         location: json['location'] ?? '');
   }
 }

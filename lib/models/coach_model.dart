@@ -8,6 +8,7 @@ class CoachModel {
   String? username;
   String? firstName;
   String? lastName;
+  String? gender;
   bool? isStaff;
   bool? isActive = true;
   DateTime? dateJoined;
@@ -31,6 +32,7 @@ class CoachModel {
     this.answers,
     this.password,
     this.lastLogin,
+    this.gender,
     this.isSuperuser,
     this.username,
     this.firstName,
@@ -56,8 +58,7 @@ class CoachModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'sport_types':
-          sportTypes?.map((sportType) => sportType.toJson()).toList(),
+      'sport_types': sportTypes?.map((sportType) => sportType.toJson()).toList(),
       'answers': answers,
       'password': password,
       'last_login': lastLogin?.toIso8601String(),
@@ -77,6 +78,7 @@ class CoachModel {
       'years_of_coaching': yearsOfCoaching,
       'professional_fighter': professionalFighter,
       'location': location,
+      'gender':gender,
       'hourly_rate': hourlyRate,
       'groups': groups,
       'user_permissions': userPermissions,
@@ -106,6 +108,7 @@ class CoachModel {
       'years_of_training': yearsOfTraining,
       'years_of_coaching': yearsOfCoaching,
       'location': location,
+      'gender':gender,
       'hourly_rate': hourlyRate,
     };
   }
@@ -136,6 +139,7 @@ class CoachModel {
       name: json['name'],
       birthdate:
           json['birthdate'] != null ? DateTime.parse(json['birthdate']) : null,
+      gender:json['birthdate']??"",
       profileImage: json['profile_image'] ?? "",
       phoneNumber: json['phone_number'],
       bio: json['bio'] ?? "",

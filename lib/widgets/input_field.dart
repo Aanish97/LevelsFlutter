@@ -5,19 +5,24 @@ import '../constants/app_colors.dart';
 class InputField extends StatelessWidget {
   final String? hintText;
   final bool obscureText;
+  final bool? readOnly;
   final Widget suffixIcon;
+  VoidCallback? onTap;
   final TextEditingController controller;
   final String? Function(String?)? textFieldValidator;
   final TextInputType keyboardType;
+  int maxLines;
+  int minlines;
 
-  const InputField(
-      {Key? key,
-      this.hintText,
-      this.obscureText = false,
-      required this.suffixIcon,
-      required this.controller,
-      this.textFieldValidator,
-      required this.keyboardType})
+   InputField({Key? key,
+    this.hintText,
+     this.readOnly = false,
+    required this.onTap,
+    this.obscureText = false,
+    required this.suffixIcon,
+    required this.controller,
+    this.textFieldValidator,
+    required this.keyboardType, this.maxLines=2, this.minlines=1})
       : super(key: key);
 
   @override
@@ -26,9 +31,13 @@ class InputField extends StatelessWidget {
       validator: textFieldValidator,
       controller: controller,
       obscureText: obscureText,
+      readOnly: readOnly!,
+      onTap:onTap!,
+      minLines: minlines,
+      maxLines: maxLines,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+        const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
         filled: true,
         border: const OutlineInputBorder(
           borderSide: BorderSide.none,

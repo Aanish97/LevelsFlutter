@@ -1,25 +1,27 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:levels_athletes_coaches/Screens/show_profile.dart';
 import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/constants.dart';
-import 'package:levels_athletes_coaches/models/user_model.dart';
+import 'package:levels_athletes_coaches/models/coach_model.dart';
 import 'package:levels_athletes_coaches/widgets/search_result_card.dart';
 import 'package:levels_athletes_coaches/constants/app_images.dart';
 
-class SearchResultAthleteScreen extends StatefulWidget {
-  const SearchResultAthleteScreen({super.key});
+class SearchResultCoachScreen extends StatefulWidget {
+
+  const SearchResultCoachScreen({super.key});
 
   @override
-  State<SearchResultAthleteScreen> createState() =>
-      _SearchResultAthleteScreenState();
+  State<SearchResultCoachScreen> createState() =>
+      _SearchResultCoachScreenState();
 }
 
-class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
-  late List<AthleteModel> coaches = [];
-  final StreamController<List<AthleteModel>> athleteController =
-      StreamController<List<AthleteModel>>();
+class _SearchResultCoachScreenState extends State<SearchResultCoachScreen> {
+  late List<CoachModel> coaches = [];
+  final StreamController<List<CoachModel>> _coachesController =
+      StreamController<List<CoachModel>>();
 
   @override
   void initState() {
@@ -30,13 +32,13 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
   }
 
   fetchData() async {
-    coaches = await AuthService.fetchAllAthletes(Constants.accessToken);
-    athleteController.add(coaches);
+    coaches = await AuthService.fetchAllCoaches(Constants.accessToken);
+    _coachesController.add(coaches);
   }
 
   @override
   void dispose() {
-    athleteController.close();
+    _coachesController.close();
     super.dispose();
   }
 
@@ -54,8 +56,8 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
         backgroundColor: Colors.black.withOpacity(0.5),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: StreamBuilder<List<AthleteModel>>(
-            stream: athleteController.stream,
+          child: StreamBuilder<List<CoachModel>>(
+            stream: _coachesController.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(
@@ -74,7 +76,7 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
                               )),
                           const SizedBox(width: 10,),
                           Text(
-                            '${snapshot.data!.length} Athlete list',
+                            '${snapshot.data!.length} Coach list',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
@@ -82,7 +84,6 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
                         ],
                       ),
                     ),
-
                     Expanded(
                       child: ListView.builder(
                         padding:
@@ -94,22 +95,18 @@ class _SearchResultAthleteScreenState extends State<SearchResultAthleteScreen> {
                             (BuildContext context, int index) {
                           return searchResultCard(
                             snapshot.data![index].name,
-                            'Boxing',
+                            snapshot.data![index].sportTypes?.map((e) => e.sport).join(","),
                             '',
                             'assets/images/demo.png',
-                            snapshot.data![index].bio ?? "",
+                            snapshot.data![index].bio ?? '',
                             context,
                             () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ShowProfileScreen(
-                                            isCoach:
-                                                false,
-                                            athleteModel:
-                                                snapshot.data![index],
-                                          )));
+                             Get.to(()=>ShowProfileScreen(
+                               isCoach:
+                               true,
+                               coachModel:
+                               snapshot.data![index],
+                             ));
                             },
                           );
                         },

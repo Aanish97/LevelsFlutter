@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:levels_athletes_coaches/constants.dart';
 import 'package:levels_athletes_coaches/models/coach_model.dart';
@@ -36,9 +35,8 @@ class AuthService {
     return null;
   }
 
-  static Future<bool> createAthlete(AthleteModel user) async {
+  static Future<bool> createAthlete(AthleteModel user,BuildContext context) async {
     const String apiUrl = '$serverUrl/auth/create-athlete/';
-
     final Map<String, dynamic> userMap = user.toJsonForCreateAthlete();
     debugPrint(userMap.toString());
     try {
@@ -54,9 +52,16 @@ class AuthService {
         debugPrint('User created successfully');
         return true;
       } else {
-        debugPrint(
-            'Failed to create user. Status code: ${response.statusCode}');
-        debugPrint('Response body: ${response.body}');
+        debugPrint('Failed to create user. Status code: ${response.statusCode}');
+
+        var result=jsonDecode(response.body);
+        debugPrint('Response body: ${result['email'][0]}');
+        ScaffoldMessenger.of(context)
+            .showSnackBar(
+           SnackBar(
+            content: Text('${result['email'][0]}'),
+          ),
+        );
         return false;
       }
     } catch (e) {
@@ -122,41 +127,10 @@ class AuthService {
     }
   }
 
-  Future<void> updateAthleteDetails(
-      AthleteModel updatedAthlete, String imagePath, String accessToken) async {
-    debugPrint(updatedAthlete.id.toString());
-    final String apiUrl =
-        '$serverUrl/auth/athlete/${updatedAthlete.id}/';
-    try {
-      var request = http.MultipartRequest(
-        "PATCH",
-        Uri.parse(apiUrl),
-      );
-      request.fields.addAll(updatedAthlete.toJsonString());
-      if (imagePath.isNotEmpty) {
-        request.files
-            .add(await http.MultipartFile.fromPath('profile_image', imagePath));
-      }
-      request.headers.addAll(<String, String>{
-        'Authorization': 'Bearer $accessToken',
-        'Content-Type': 'application/json',
-      });
-      request.send().then((response) async {
-        if (response.statusCode == 200) {
-          debugPrint('Coach details updated successfully');
-        } else {
-          debugPrint(
-              'Failed to update coach details. Status code: ${response.statusCode}');
-          debugPrint('Response body: ${await response.stream.bytesToString()}');
-        }
-      });
-    } catch (e) {
-      debugPrint('Error updating coach details: $e');
-    }
-  }
+
 
   static Future<List<CoachModel>> fetchAllCoaches(String accessToken) async {
-    const String apiUrl = '$serverUrl/v1/auth/coach';
+    const String apiUrl = '$serverUrl/auth/coach/?years_of_coaching=&sport=boxing&gender=&location=';
     try {
       final response = await http.get(
         Uri.parse(apiUrl),
@@ -166,15 +140,14 @@ class AuthService {
         },
       );
 
-      debugPrint(response.statusCode.toString());
+      debugPrint(" here is the coaches results ${response.body}");
 
       if (response.statusCode == 200) {
         debugPrint(response.toString());
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         if (responseData.containsKey('results')) {
           List<dynamic> coachJsonList = responseData['results'];
-          List<CoachModel> coaches =
-              coachJsonList.map((json) => CoachModel.fromJson(json)).toList();
+          List<CoachModel> coaches = coachJsonList.map((json) => CoachModel.fromJson(json)).toList();
           return coaches;
         } else {
           throw Exception('API response is missing the "results" property');
@@ -249,7 +222,7 @@ class AuthService {
     }
   }
 
-  Future<bool> createCoach(CoachModel coach) async {
+  Future<bool> createCoach(CoachModel coach,BuildContext? context) async {
     const String apiUrl = '$serverUrl/auth/create-coach/';
 
     final Map<String, dynamic> coachMap = coach.toJsonCreateCoach();
@@ -267,7 +240,12 @@ class AuthService {
         return true;
       } else {
         print('Failed to create coach. Status code: ${response.statusCode}');
+        var resut=jsonDecode(response.body);
         print('Response body: ${response.body}');
+        ScaffoldMessenger.of(context!).showSnackBar( SnackBar(
+              content:
+              Text('${resut['username'][0]}'),
+            ));
         return false;
       }
     } catch (e) {
@@ -299,33 +277,4 @@ class AuthService {
     }
   }
 
-// Future<CoachModel?> update(String accessToken, int? userId) async {
-//   const String apiUrl = '$serverUrl/auth/coach/$userId';
-//
-//   try {
-//     final response = await http.get(
-//       Uri.parse(apiUrl),
-//       headers: <String, String>{
-//         'Authorization': 'Bearer $accessToken',
-//       },
-//     );
-//
-//     if (response.statusCode == 200) {
-//       debugPrint(response.statusCode.toString());
-//       debugPrint('hello');
-//       final Map<String, dynamic> coachDetailsMap = jsonDecode(response.body);
-//       print('testing');
-//       CoachModel coachData = CoachModel.fromJson(coachDetailsMap);
-//       print('Coach data: ${coachData.name}');
-//       return coachData;
-//     } else {
-//       print(
-//           'Failed to fetch coach details. Status code: ${response.statusCode}');
-//       return null;
-//     }
-//   } catch (e) {
-//     print('Error fetching coach details: $e');
-//     return null;
-//   }
-// }
 }

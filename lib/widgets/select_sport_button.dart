@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
+
+import '../constants/app_colors.dart';
 
 class SelectSportButton extends StatelessWidget {
   final String title;
@@ -6,11 +9,13 @@ class SelectSportButton extends StatelessWidget {
   final bool isTransparent;
   final Color textColor;
   final double height;
+  final String imagePath;
 
-  const SelectSportButton(
+   SelectSportButton(
       {Key? key,
       required this.title,
       required this.onTap,
+      required this.imagePath,
       required this.isTransparent,
       required this.textColor,
       required this.height})
@@ -22,25 +27,25 @@ class SelectSportButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.red, width: 2),
+          border: Border.all(color: AppColors.primaryColor, width: 2),
           borderRadius: BorderRadius.circular(10),
-          color: (isTransparent) ? Colors.transparent : Colors.red,
+          color: (isTransparent) ? Colors.transparent : AppColors.primaryColor,
         ),
         height: height,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.sports_gymnastics,
-              size: 22,
-              color: Colors.white,
-            ),
-            Text(
-              title,
-              style: TextStyle(
-                color: textColor,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
+            Image.asset(imagePath,height: 40,),
+            const SizedBox(width: 20,),
+            SizedBox(
+              width: 100,
+              child: Text(
+                title,
+                style: montserratBold.copyWith(
+                  color: textColor,
+                  fontSize: 18,
+                ),
               ),
             ),
           ],

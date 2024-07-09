@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool? isObscure;
+  final bool? isReadOnly;
   final String? obscureCharacter;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
+    this.isReadOnly=false,
     this.isObscure = false,
     this.obscureCharacter = '*',
     this.keyboardType,
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
         TextFormField(
       controller: controller,
       obscureText: isObscure!,
+      readOnly: isReadOnly!,
       obscuringCharacter: obscureCharacter!,
       keyboardType: keyboardType,
       validator: validator,
@@ -50,7 +53,7 @@ class CustomTextField extends StatelessWidget {
       textInputAction: textInputAction,
       style: montserratMedium.copyWith(
         fontSize: kFont14,
-        color: AppColors.whiteColor,
+        color: AppColors.blackColor,
       ),
       minLines: minLines,
       maxLines: maxLines,

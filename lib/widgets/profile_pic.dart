@@ -32,7 +32,7 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
         children: [
           ClipOval(
             child: Container(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(3),
               color: Colors.red,
               child: ClipOval(
                 child: Container(
@@ -42,20 +42,21 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
                     child: widget.imagePath!.isNotEmpty ? Image.file(
                       File(widget.imagePath!),
                       fit: BoxFit.cover,
-                      width: 120,
-                      height: 120,
-                    ): profileImage.isNotEmpty
+                      width: 100,
+                      height: 100,
+                    ):
+                    profileImage.isNotEmpty
                         ? Image.network(
                       insertAuthPath(profileImage),
                       fit: BoxFit.cover,
-                      width: 120,
-                      height: 120,
+                      width: 80,
+                      height: 80,
                     )
                         : Image.asset(
                       'assets/images/demo.png',
                       fit: BoxFit.cover,
-                      width: 120,
-                      height: 120,
+                      width: 100,
+                      height: 100,
                     ),
                   ),
                 ),
@@ -82,7 +83,7 @@ class _ProfilePicWidgetState extends State<ProfilePicWidget> {
           child: const Icon(
             Icons.add_a_photo,
             color: Colors.white,
-            size: 20,
+            size: 15,
           ),
         ),
       );

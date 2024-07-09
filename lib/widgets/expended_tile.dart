@@ -1,5 +1,6 @@
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
 
 class ExpendedTile extends StatelessWidget {
   final GlobalKey<ExpansionTileCardState> cardKey;
@@ -19,49 +20,89 @@ class ExpendedTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: ExpansionTileCard(
-        baseColor: Colors.black,
-        expandedColor: Colors.black,
-        expandedTextColor: Colors.white,
-        key: cardKey,
-        title: Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-        ),
-        trailing: icon,
-        onExpansionChanged: onTap,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      skillLevel('beginner');
-                    },
-                    child: Container(
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
-                        borderRadius: BorderRadius.circular(15),
+    return ExpansionTileCard(
+      baseColor: Colors.black.withOpacity(0.8),
+      expandedColor: Colors.black,
+      expandedTextColor: Colors.white,
+      key: cardKey,
+      title: Text(
+        title,
+        style:  montserratMedium.copyWith(color: Colors.white),
+      ),
+      trailing: icon,
+      onExpansionChanged: onTap,
+      children: <Widget>[
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () {
+                    skillLevel('beginner');
+                  },
+                  child: Container(
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade900,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'beginner',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              child: Image.asset(
+                                'assets/images/Beginner.png',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    skillLevel('intermediate');
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade900,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
                       child: Center(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'beginner',
-                              style: TextStyle(color: Colors.white),
+                            Text(
+                              'intermediate',
+                              style: montserratMedium.copyWith(color: Colors.white),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 child: Image.asset(
-                                  'assets/images/Beginner.png',
+                                  'assets/images/Intermediate 01.png',
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                child: Image.asset(
+                                  'assets/images/Intermediate 02.png',
                                 ),
                               ),
                             ),
@@ -70,98 +111,55 @@ class ExpendedTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      skillLevel('intermediate');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'intermediate',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: Image.asset(
-                                    'assets/images/Intermediate 01.png',
-                                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                InkWell(
+                  onTap: () {
+                    skillLevel('advance');
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade900,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'advance',
+                              style: montserratMedium.copyWith(color: Colors.white),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                child: Image.asset(
+                                  'assets/images/Advanced 01.png',
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: Image.asset(
-                                    'assets/images/Intermediate 02.png',
-                                  ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                child: Image.asset(
+                                  'assets/images/Advanced 02.png',
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      skillLevel('advance');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'advance',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: Image.asset(
-                                    'assets/images/Advanced 01.png',
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  child: Image.asset(
-                                    'assets/images/Advanced 02.png',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

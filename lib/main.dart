@@ -18,7 +18,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Levels',
       theme: ThemeData(
-        useMaterial3: true,
+        useMaterial3: false,
+          scaffoldBackgroundColor: Colors.transparent,
+          primaryColor: Colors.transparent
       ),
       home: const SplashScreen(),
     );

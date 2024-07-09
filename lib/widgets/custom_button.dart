@@ -32,8 +32,8 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.buttonFillColor, width: 2),
-          borderRadius: BorderRadius.circular(13),
+          border: Border.all(color: AppColors.buttonFillColor, width: 1.5),
+          borderRadius: BorderRadius.circular(10),
           color:
               (isTransparent) ? Colors.transparent : buttonColor,
         ),
@@ -42,7 +42,7 @@ class CustomButton extends StatelessWidget {
           child: child ??
               Text(
                 title,
-                style: montserratBold.copyWith(
+                style: montserratMedium.copyWith(
                   color: textColor,
                   fontSize: fontSize,
                 ),

@@ -66,6 +66,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             key: _formKey,
                             child: InputField(
                                 hintText: 'Email',
+                                onTap: (){
+
+                                },
                                 obscureText: false,
                                 keyboardType: TextInputType.emailAddress,
                                 suffixIcon: const SizedBox(),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:levels_athletes_coaches/Screens/authScreen/login_screen.dart';
-import 'package:levels_athletes_coaches/Screens/select_sport_screen.dart';
+import 'package:levels_athletes_coaches/Screens/authScreen/select_sport_screen.dart';
 import 'package:levels_athletes_coaches/Services/auth_services.dart';
 import 'package:levels_athletes_coaches/coach_provider.dart';
 import 'package:levels_athletes_coaches/models/coach_model.dart';
@@ -17,7 +17,7 @@ import 'package:levels_athletes_coaches/constants/app_colors.dart';
 import 'package:levels_athletes_coaches/constants/app_sizes.dart';
 import 'package:levels_athletes_coaches/constants/app_text_styles.dart';
 
-import '../../Controllers/singupontroller.dart';
+import 'package:levels_athletes_coaches/Controllers/auth_controller/singupontroller.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -27,8 +27,9 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  SignupController auth = SignupController();
-
+  SignupController auth = Get.put(SignupController());
+  var gender = ["Male", 'Female', 'other'];
+  var selectedGender = "";
   @override
   Widget build(BuildContext context) {
     var coachProvider = Provider.of<CoachProvider>(context);
@@ -54,7 +55,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                   /// logo is here
                   Positioned(
-                    top: height(context) * 0.08,
+                    top: height(context) * 0.06,
                     left: 0,
                     right: 0,
                     child: Image.asset(
@@ -64,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   Positioned(
-                    top: height(context) * 0.31,
+                    top: height(context) * 0.27,
                     left: 0,
                     right: 0,
                     bottom: 0,
@@ -106,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     width: 145,
                                     child: CustomButton(
                                       textColor:
-                                          (auth.professionType == 'ATHLETE')
+                                          (auth.professionType.value == 'ATHLETE')
                                               ? Colors.white
                                               : Colors.black,
                                       title: 'ATHLETE',
@@ -114,7 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         auth.setProfessionType('ATHLETE');
                                       },
                                       isTransparent:
-                                          (auth.professionType == 'ATHLETE')
+                                          (auth.professionType.value == 'ATHLETE')
                                               ? false
                                               : true,
                                       height: 45,
@@ -128,7 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     width: 145,
                                     child: CustomButton(
                                       textColor:
-                                          (auth.professionType == 'COACH')
+                                          (auth.professionType.value == 'COACH')
                                               ? Colors.white
                                               : Colors.black,
                                       title: 'COACH',
@@ -136,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         auth.setProfessionType('COACH');
                                       },
                                       isTransparent:
-                                          (auth.professionType == 'COACH')
+                                          (auth.professionType.value== 'COACH')
                                               ? false
                                               : true,
                                       height: 45,
@@ -145,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ],
                               ),
                               SizedBox(
-                                height: height(context) * 0.02,
+                                height: height(context) * 0.015,
                               ),
                               Center(
                                   child: Text('Fill out the details below:',
@@ -213,6 +214,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           }
                                         }),
                                     SizedBox(
+                                      height: height(context) * 0.01,
+                                    ),
+
+                                    /// gender drop down
+                                    SizedBox(
+                                      height: 50,
+                                      width: width(context),
+                                      child: DropdownButtonFormField<String>(
+                                        value: selectedGender.isEmpty ? null : selectedGender,
+                                        icon: const Icon(Icons.keyboard_arrow_down),
+                                        elevation: 0,
+                                        padding: EdgeInsets.zero,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(kRadius10),
+                                            borderSide:const  BorderSide(
+                                              color: Colors.transparent
+                                            )
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(kRadius10),
+                                              borderSide:const  BorderSide(
+                                                  color: Colors.transparent
+                                              )
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(kRadius10),
+                                              borderSide:const  BorderSide(
+                                                  color: Colors.transparent
+                                              )
+                                          ),
+                                          filled: true,
+                                          contentPadding:
+                                          const EdgeInsets.only(left: 10, right: 10),
+                                          fillColor: AppColors.textFieldFillColor,
+                                        ),
+                                        hint: Text(
+                                          'Gender',
+                                          style: montserratRegular.copyWith(
+                                            color: AppColors.hintTextColor.withOpacity(0.7),
+                                            fontSize: kFont14,
+                                          ),
+                                        ),
+                                        style: montserratBold.copyWith(
+                                          color: AppColors.blackColor,
+                                          fontSize: kFont14,
+                                        ),
+                                        isExpanded: false,
+                                        dropdownColor: AppColors.whiteColor,
+                                        onChanged: (String? newValue) {
+                                          selectedGender = newValue!;
+                                        },
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please select country';
+                                          }
+                                          return null;
+                                        },
+                                        items: gender.map<DropdownMenuItem<String>>((String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: montserratMedium.copyWith(
+                                                color: AppColors.blackColor,
+                                                fontSize: kFont14,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ),
+                                    SizedBox(
                                       height: height(context) * 0.015,
                                     ),
                                     CustomTextField(
@@ -277,7 +351,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 textColor: Colors.white,
                                 title: 'SUBMIT',
                                 onTap: () async {
-                                  if (auth.professionType == 'ATHLETE') {
+                                  if (auth.professionType.value == 'ATHLETE') {
                                     if (auth.formKey.currentState!.validate()) {
                                       setState(() {
                                         auth.loading.value = true;
@@ -285,13 +359,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       AthleteModel userData = AthleteModel(
                                         name: auth.nameController.text.trim(),
                                         email: auth.emailController.text.trim(),
-                                        username:
-                                            auth.emailController.text.trim(),
-                                        password:
-                                            auth.passwordController.text.trim(),
-                                        phoneNumber:
-                                            auth.phoneNoController.text.trim(),
+                                        username: auth.emailController.text.trim(),
+                                        password: auth.passwordController.text.trim(),
+                                        phoneNumber: auth.phoneNoController.text.trim(),
                                         bio: '',
+                                        gender: selectedGender=="Male"?"m":selectedGender=="Female"?"f":"u",
                                         birthdate: '',
                                         dateJoined: DateTime.timestamp(),
                                         firstName: '',
@@ -305,22 +377,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         id: 0,
                                         profileImage: '',
                                       );
-                                      bool isSignUp =
-                                          await AuthService.createAthlete(
-                                              userData);
+                                      bool isSignUp = await AuthService.createAthlete(userData,context);
+                                      setState(() {
+                                        auth.loading.value = false;
+                                      });
                                       if (isSignUp) {
                                         setState(() {
                                           auth.loading.value = false;
                                         });
-                                        Get.to(() => const LoginScreen());
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Something went wrong, try later!'),
-                                          ),
-                                        );
+                                        Get.off(() => const LoginScreen());
                                       }
                                     }
                                   } else {
@@ -328,18 +393,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       CoachModel coach = CoachModel(
                                         name: auth.nameController.text.trim(),
                                         email: auth.emailController.text.trim(),
-                                        password:
-                                            auth.passwordController.text.trim(),
-                                        phoneNumber:
-                                            auth.phoneNoController.text.trim(),
-                                        username:
-                                            auth.emailController.text.trim(),
+                                        password: auth.passwordController.text.trim(),
+                                        phoneNumber: auth.phoneNoController.text.trim(),
+                                        username: auth.emailController.text.trim(),
                                         firstName: '',
                                         lastName: '',
                                         location: '',
                                         isSuperuser: false,
                                         isStaff: false,
                                         isActive: true,
+                                        gender: selectedGender=="Male"?"m":selectedGender=="Female"?"f":"u",
                                         dateJoined: DateTime.timestamp(),
                                         groups: [],
                                         userPermissions: [],

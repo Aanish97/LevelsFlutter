@@ -27,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             /// back ground image
-            Positioned(
+            Positioned.fill(
               left: 0,
               right: 0,
               top: 0,
@@ -36,22 +36,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 AppImages.background1,
                 width: height(context) * 0.280,
                 height: height(context) * 0.280,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
 
-            // /// front shadow
-            // Positioned(
-            //     left: 0,
-            //     right: 0,
-            //     top: 0,
-            //     bottom: 0,
-            //     child: Container(
-            //       color: const Color(0xff000000).withOpacity(0.6),
-            //     )),
+            /// front shadow
+            Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  color: const Color(0xff000000).withOpacity(0.7),
+                )),
 
             Positioned(
-              top: height(context) * 0.157,
+              top: height(context) * 0.17,
               left: 0,
               right: 0,
               child: Column(
